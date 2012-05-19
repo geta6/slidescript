@@ -1,15 +1,11 @@
 Transition = {
   none : function (a, b, time, adv) {
-    with (a.style) {
-      display = 'none';
-      opacity = 1;
-      zIndex  = 10;
-    }
-    with (b.style) {
-      display = 'block';
-      opacity = 1;
-      zIndex  = 20;
-    }
+    a.style.display = 'none';
+    a.style.opacity = 1;
+    a.style.zIndex  = 10;
+    b.style.display = 'block';
+    b.style.opacity = 1;
+    b.style.zIndex  = 20;
   }
 };
 
@@ -20,6 +16,18 @@ SlideFunc = {
     a.style['-ms-transition-duration']     = time / 1000 + 's';
     a.style['-o-transition-duration']      = time / 1000 + 's';
     a.style['transition-duration']         = time / 1000 + 's';
+  },
+  property : function (a, param) {
+    a.style['-webkit-transition-property'] = param;
+    a.style['-moz-transition-property']    = param;
+    a.style['-ms-transition-property']     = param;
+    a.style['-o-transition-property']      = param;
+    a.style['transition-property']         = param;
+  },
+  after : function (a) {
+    a.style.display = 'none';
+    a.style.opacity = 1;
+    a.style.zIndex = 10;
   },
   fadein : function (a, time) {
     SlideFunc.animate(a, time);
@@ -165,7 +173,15 @@ var SlideScript = function (opts) {
       var tr = page[prev].querySelector('input[name="transition"]');
       SlideFunc.animate(page[prev], time);
       SlideFunc.animate(page[next], time);
+      if (null != tr && 'undefined' == typeof(Transition[tr.value])) {
+        window.alert('undefined transition type "' + tr.value + '".')
+      }
+      var prevTarget = page[prev];
+      var nextTarget = page[next];
       Transition[null != tr ? tr.value : 'none'](page[prev], page[next], time, prev < next);
+      setTimeout(function () {
+        SlideFunc.after(prevTarget);
+      }, time);
       prev = next;
     }
   }

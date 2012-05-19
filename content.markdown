@@ -1,5 +1,5 @@
 @theme:default
-@transition: dissolve
+@transition: moveto
 
 # SlideScript
 
@@ -13,8 +13,7 @@
 
 
 --------------
-@transition: dissolve
-
+@transition: moveto
 
 
 # アバウトな解説
