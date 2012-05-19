@@ -1,0 +1,90 @@
+/*
+
+Metrics
++-------------+
+|#wrap        | main wrapper, no-style
+|+-----------+|
+||.page      || settle slide position
+||+---------+||
+|||.sheet   ||| stylize slide
+|||.image   ||| "@porperty:value" handles this style
+||+---------+||
+|+-----------+|
+|             |
+|+-----------+|
+||.page      || position: absolute;
+||+---------+|| switch "display" & opacity with js
+|||.sheet   |||
+|||.image   |||
+||+---------+||
+|+-----------+|
++-------------+
+
+*/
+
+
+html {
+  font: 20px/1.5 Helvetica, Arial, Sans-Serif;
+}
+
+a {
+  color: lightslategray;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.page {
+  background-color: whitesmoke;
+}
+
+.sheet {
+  padding: 0 10%;
+}
+
+.sheet.image {
+  background-color: rgba(255,255,255,0.6);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.72;
+  margin-bottom: .25em;
+}
+
+h2, h3, h4, h5, h6 {
+  margin-top: .5em;
+}
+
+h1 { font-size: 3.0em; line-height: 2.0; }
+h2 { font-size: 2.2em; }
+h3 { font-size: 1.8em; }
+h4 { font-size: 1.4em; }
+h5 { font-size: 1.2em; }
+h6 { font-size: 1.0em; }
+
+p {
+  margin-bottom: .5em;
+}
+
+
+ul, ol {
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+ul { list-style: inside disc; }
+ol { list-style: inside decimal; }
+
+blockquote {
+  margin-left: .2em;
+  padding-left: .5em;
+  border-left: 5px solid silver;
+  font-style: italic;
+  color: gray;
+}
+blockquote p {
+  margin-bottom: 0;
+}
