@@ -61,6 +61,33 @@ How to write
 * set background overlay
 
 
+Define original transition
+--------------------------
+
+* `touch ./transition/original.js`
+
+~~~js
+Transition.originalTransition = function (a, b, time, adv) {
+  // a    == Current Slide       : NodeElement
+  // b    == Next Slide          : NodeElement
+  // time == Transition Duration : Numeric
+  // adv  == Advance or Back     : Boolean
+}
+~~~
+
+* load script
+
+~~~html
+<script src='./transition/original.js'></script>
+~~~
+
+* use in slide
+  * value is __extended function name__, not filename
+
+~~~
+@transition : originalTransition
+~~~
+
 License
 -------
 
@@ -72,4 +99,3 @@ Copyright
 ---------
 
 * [tanakahisateru/js-markdown-extra](https://github.com/tanakahisateru/js-markdown-extra)
-* [syntaxhighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)
