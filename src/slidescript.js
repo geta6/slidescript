@@ -61,7 +61,7 @@ var SlideScript = function (opts) {
       down = function (text) {
         var spl = ['<div class="page"><div class="sheet">','</div></div>'],
             mkd = Markdown(text, spl[0], spl[1]),
-            reg = /(<p>|\n| )*@([a-zA-Z0-9]*?) *?: *?([#a-zA-Z0-9%\.]+?[#a-zA-Z0-9%\. ]+?)(<\/p>|\n)/gi,
+            reg = /(<p>|\n| )*@([a-zA-Z0-9]*?) *?: *?([#a-zA-Z0-9%\.]+?[#a-zA-Z0-9%\. (,)]+?)(<\/p>|\n)/gi,
             rep = '<input type="hidden" name="$2" value="$3">';
         return spl[0] + mkd.replace(reg, rep) + spl[1];
       };
@@ -143,6 +143,10 @@ var SlideScript = function (opts) {
             break;
             case 'defaultDuration' :
             dftm = parseInt(val);
+            break;
+            case 'overlay' :
+            var sheet = page[i].querySelector('.sheet');
+            sheet.style.backgroundColor = val;
             break;
             default:
             time = dftm;

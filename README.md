@@ -19,6 +19,35 @@ How to use
 
 that's all.
 
+How to write
+------------
+
+1. page splitter is `---`
+2. when the first heading is image, image is set to slide background
+  * `overlay` property is used when hard to be visible
+3. in a format `@property:value`, can stylize per page
+  * `property` is css property name with JS format (`font-size` -> `fontSize`)
+  * `value` is corresponding value
+### special property
+#### theme
+* load external css
+* `@theme:foobar` -> `<link rel='stylesheet' href='./theme/foobar.css'>`
+#### transition
+* set transition for slide
+* transition is adapted when leaving the slide
+* at default, `none` or `dissolve` or `moveto` can be used
+#### defaultTransition
+* set default transition name
+* at default, `none`
+#### duration
+* set transition duration in milli seconds
+#### defaultDuration
+* set default duration value
+* at default, `240`
+#### overlay
+* set background overlay
+
+
 License
 -------
 
