@@ -1,0 +1,41 @@
+* {
+  margin:0;
+  padding:0;
+  border:0;
+  border-collapse:collapse;
+  border-spacing:0;
+  font-family:inherit;
+  font-style:normal;
+  font-weight:normal;
+  font-size:100%;
+  text-align:left;
+}
+.page {
+  position: relative;
+  z-index : 5;
+  page-break-before: always;
+  overflow: hidden;
+  background-image: none !important;
+}
+.sheet {
+  margin: 0 !important; padding: 0 !important;
+  background-color: transparent !important;
+  position: relative;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+#note {
+  opacity: 0;
+  z-index: 100;
+  position: fixed;
+  top: 5%; left: 5%;
+  color: red;
+}
+@media print {
+  #note {
+    display: none !important;
+  }
+}
