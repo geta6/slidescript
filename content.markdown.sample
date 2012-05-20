@@ -20,14 +20,13 @@
 
 * markdownな文書からslideを作ります
 * 必要なのはjsとブラウザだけ
-  1. `git clone https://github.com/slidescript`
+  1. `git clone https://github.com/geta6/slidescript`
   2. `open -a Safari index.html`
 
 
 
 --------------
-@background: maroon
-@color: white
+@background: magenta
 
 
 
