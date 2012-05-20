@@ -2,7 +2,7 @@ SlideScript
 ===========
 
 * [demo](http://ss.geta6.net)
-* ver 0.3
+* ver 1.0
 
 What's this
 -----------
