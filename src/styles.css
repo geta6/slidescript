@@ -37,7 +37,7 @@ html, body {
 
 #note {
   opacity: 0;
-  z-index: 100; 
+  z-index: 100;
   position: fixed;
   top: 5%; left: 5%;
   color: red;
@@ -72,7 +72,6 @@ html, body {
 #ss_index li.selected {
   background: lightsteelblue;
 }
-
 
 li p {
   display: inline;

@@ -1132,9 +1132,9 @@ function Markdown(text, __INI, __END) {
         var codeblock = $2;
 
         if ('' != $1) {
-          var result = "<pre class='brush: " + codetype + ";'>" + codeblock + "\n</pre>";
+          var result = "<pre class='brush: " + codetype + ";'>" + codeblock + "</pre>";
         } else {
-          var result = "<pre><code>" + codeblock + "\n</code></pre>";
+          var result = "<pre><code>" + codeblock + "</code></pre>";
         }
 
         return "\n\n" + _HashBlock( result ) + "\n\n";
