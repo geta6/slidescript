@@ -56,6 +56,16 @@ html, body {
   background-color: rgba(255,255,255,0.84);
 }
 
+.selected {
+  cursor: default !important;
+  background: lightgray;
+}
+
+#list li {
+  cursor: pointer;
+  font-size: .8em;
+}
+
 #repos {
   z-index: 1200;
   position: fixed;

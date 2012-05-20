@@ -50,7 +50,7 @@ var SlideScript = function (opts) {
 
   var self = this,
       /* ELEMENT */theme, wrap, page, note, help, list,
-      /* COUNTER */prev = 0, tout,
+      /* COUNTER */prev = 0, tout, li,
       time = 240,
       dftm = 240,
       dftr = 'none',
@@ -155,18 +155,21 @@ var SlideScript = function (opts) {
           }
         }
         for (var j = 0; j < 6; j++) {
-          var heading = page[i].getElementsByTagName('h' + (j + 1));
-          if (0 < heading.length) {
-            var heading = heading[0].childNodes.item(0);
+          var headings = page[i].getElementsByTagName('h' + (j + 1));
+          if (0 < headings.length) {
+            var heading = headings[0].childNodes.item(0);
             if ('IMG' == heading.tagName) {
               var sheet = page[i].querySelector('.sheet');
               sheet.setAttribute('class', 'sheet image');
               page[i].style.backgroundImage = 'url(' + heading.getAttribute('src') + ')';
               heading.style.display = 'none';
-              heading = 'IMAGE';
-            } else {
-              heading = heading.textContent;
+              if (1 < headings.length) {
+                heading = headings[1].childNodes.item(0);
+              } else {
+                continue;
+              }
             }
+            heading = heading.textContent;
             break;
           } else if (5 == j) {
             heading = 'NO-HEADING';
@@ -174,7 +177,17 @@ var SlideScript = function (opts) {
         }
         idx.push(heading);
       }
-      list.innerHTML = '<li>' + idx.join('</li><li>') + '</li>';
+      list.innerHTML = '<li class="selected">' + idx.join('</li><li>') + '</li>';
+      li = list.querySelectorAll('li');
+      for (var i = 0; i < li.length; i++) {
+        li[i].setAttribute('x-index', i);
+        li[i].addEventListener('click', function (event) {
+          var index = event.target.getAttribute('x-index');
+          if (prev != index) {
+            self.move(index);
+          }
+        }, false);
+      }
 
 
     }
@@ -185,6 +198,7 @@ var SlideScript = function (opts) {
 
 
   self.move = function (next) {
+    next = next - 0;
     if (next < 0 || page.length - 1 < next) {
       clearTimeout(tout);
       note.innerHTML = next < 0 ? 'Head of Slide.' : 'End of Slide.';
@@ -193,6 +207,10 @@ var SlideScript = function (opts) {
         SlideFunc.fadeout(note, time);
       }, 600);
     } else {
+      for (var i = 0; i < li.length; i++) {
+        li[i].setAttribute('class', '');
+      }
+      li[next].setAttribute('class', 'selected');
       var tr = page[prev].querySelector('input[name="transition"]');
       SlideFunc.animate(page[prev], time);
       SlideFunc.animate(page[next], time);
@@ -200,7 +218,6 @@ var SlideScript = function (opts) {
         window.alert('undefined transition type "' + tr.value + '".')
       }
       var prevTarget = page[prev];
-      var nextTarget = page[next];
       Transition[null != tr ? tr.value : dftr](page[prev], page[next], time, prev < next);
       setTimeout(function () {
         SlideFunc.after(prevTarget);
