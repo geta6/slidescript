@@ -52,6 +52,8 @@ var SlideScript = function (opts) {
       /* ELEMENT */theme, wrap, page, note, help, list,
       /* COUNTER */prev = 0, tout,
       time = 240,
+      dftm = 240,
+      dftr = 'none',
       sets = function (val, def) { return 'undefined' == typeof(val) ? def : val; },
       opts = sets(opts, {}),
       opts = { debug : sets(opts.debug, false) },
@@ -59,7 +61,7 @@ var SlideScript = function (opts) {
       down = function (text) {
         var spl = ['<div class="page"><div class="sheet">','</div></div>'],
             mkd = Markdown(text, spl[0], spl[1]),
-            reg = /(<p>|\n| )*@([a-zA-Z0-9]*?) *?: *?([a-zA-Z0-9%\.]+?[a-zA-Z0-9%\. ]+?)(<\/p>|\n)/gi,
+            reg = /(<p>|\n| )*@([a-zA-Z0-9]*?) *?: *?([#a-zA-Z0-9%\.]+?[#a-zA-Z0-9%\. ]+?)(<\/p>|\n)/gi,
             rep = '<input type="hidden" name="$2" value="$3">';
         return spl[0] + mkd.replace(reg, rep) + spl[1];
       };
@@ -124,9 +126,26 @@ var SlideScript = function (opts) {
             case 'theme' :
             theme.setAttribute('href', './theme/' + val + '.css');
             break;
-            case 'transition':
+            case 'transition' :
+            if ('undefined' == typeof(Transition[val])) {
+              alert('undefined transition type "' + val + '" on page.' + i);
+            }
+            break;
+            case 'defaultTransition' :
+            if ('undefined' == typeof(Transition[val])) {
+              alert('undefined default transition type "' + val + '" on page.' + i);
+            } else {
+              dftr = val;
+            }
+            break;
+            case 'duration' :
+            time = parseInt(val);
+            break;
+            case 'defaultDuration' :
+            dftm = parseInt(val);
             break;
             default:
+            time = dftm;
             page[i].style[key] = val + ' !important';
             break;
           }
@@ -178,7 +197,7 @@ var SlideScript = function (opts) {
       }
       var prevTarget = page[prev];
       var nextTarget = page[next];
-      Transition[null != tr ? tr.value : 'none'](page[prev], page[next], time, prev < next);
+      Transition[null != tr ? tr.value : dftr](page[prev], page[next], time, prev < next);
       setTimeout(function () {
         SlideFunc.after(prevTarget);
       }, time);

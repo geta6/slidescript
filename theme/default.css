@@ -35,6 +35,14 @@ a:hover {
   text-decoration: none;
 }
 
+em, strong {
+  color: maroon;
+}
+
+strong {
+  font-weight: bold;
+}
+
 .page {
   background-color: whitesmoke;
 }
