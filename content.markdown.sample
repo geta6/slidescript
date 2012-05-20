@@ -1,6 +1,7 @@
 @theme : default
-@defaultTransition : moveto
+@defaultTransition : dissolve
 @defaultDuration : 240
+@transition: moveto
 
 # SlideScript
 
@@ -14,6 +15,7 @@
 
 
 --------------
+@transition: moveto
 
 
 # アバウトな解説
@@ -22,6 +24,24 @@
 * 必要なのはjsとブラウザだけ
   1. `git clone https://github.com/geta6/slidescript`
   2. `open -a Safari index.html`
+
+
+
+---
+@transition: dissolve
+@color:maroon
+@overlay:rgba(255,255,255,.72)
+
+
+# ![alt](./img/eloo.jpg)
+
+# ショーケース表示
+
+先頭のHeading要素に画像のみを指定すると、その画像がスライドの背景になります
+
+`.image`というクラスが付くので、テーマをカスタムして文字を見やすくしてください
+
+個別に見にくい画像を調整する場合は，`overlay`プロパティでも編集可能です
 
 
 
@@ -47,22 +67,6 @@
 * 一括設定もできます
     * `@defaultTranstion : dissolve`
     * `@defaultDuration : 240`
-
----
-@transition: dissolve
-@color:maroon
-@overlay:rgba(255,255,255,.72)
-
-
-# ![alt](./img/eloo.jpg)
-
-# ショーケース表示
-
-先頭のHeading要素に画像のみを指定すると、その画像がスライドの背景になります
-
-`.image`というクラスが付くので、テーマをカスタムして文字を見やすくしてください
-
-個別に見にくい画像を調整する場合は，`overlay`プロパティでも編集可能です
 
 
 
@@ -100,6 +104,20 @@
   * 引数2が次のスライドノード
   * 引数3がアニメーションの時間ミリ秒です
   * 引数4は、進行ならtrue、後退ならfalseが入ります
+
+
+---
+
+
+
+# ビルドモード
+
+* 「B」を押すと印刷用にスライドをカスタムします
+  * 背景画像は印刷されないので，スライドの末尾にimg要素として付加します
+* 現在，下記のモードが利用可能です
+  * 1ページに1枚ずつ印刷する「individual」モード
+  * 1ページの左に4枚ずつ縦に並べて表示する「handout」モード
+* モードの切り替えは「B」でビルドした後，「R」で行います
 
 
 ---

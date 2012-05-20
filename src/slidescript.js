@@ -44,12 +44,14 @@ SlideFunc = {
   }
 }
 
+
+
 var SlideScript = function (opts) {
 
 
 
   var self = this,
-      /* ELEMENT */theme, wrap, page, note, help, list,
+      /* ELEMENT */theme, links, wrap, page, note, help, list,
       /* COUNTER */prev = 0, tout, li,
       time = 240,
       dftm = 240,
@@ -82,6 +84,7 @@ var SlideScript = function (opts) {
         return false;
       } else {
         theme = document.querySelector('link[name=theme]');
+        links = document.querySelector('link');
       }
 
 
@@ -105,7 +108,7 @@ var SlideScript = function (opts) {
       help = document.createElement('div');
       help.setAttribute('id', 'help');
       help.setAttribute('class', 'repo');
-      var txt = new Array(['← : Previous'], ['→ : Next'], ['Z : Help'], ['C : Index']);
+      var txt = new Array(['← : Previous'], ['→ : Next'], ['Z : Help'], ['C : Index'], ['B : Build for Print'], ['R : Switch build mode']);
       help.innerHTML = '<li>' + txt.join('</li><li>') + '</li>';
       document.body.appendChild(help);
 
@@ -124,34 +127,34 @@ var SlideScript = function (opts) {
           var val = param[p].getAttribute('value');
           switch (key) {
             case 'theme' :
-            theme.setAttribute('href', './theme/' + val + '.css');
-            break;
+              theme.setAttribute('href', './theme/' + val + '.css');
+              break;
             case 'transition' :
-            if ('undefined' == typeof(Transition[val])) {
-              alert('undefined transition type "' + val + '" on page.' + i);
-            }
-            break;
+              if ('undefined' == typeof(Transition[val])) {
+                alert('undefined transition type "' + val + '" on page.' + i);
+              }
+              break;
             case 'defaultTransition' :
-            if ('undefined' == typeof(Transition[val])) {
-              alert('undefined default transition type "' + val + '" on page.' + i);
-            } else {
-              dftr = val;
-            }
-            break;
+              if ('undefined' == typeof(Transition[val])) {
+                alert('undefined default transition type "' + val + '" on page.' + i);
+              } else {
+                dftr = val;
+              }
+              break;
             case 'duration' :
-            time = parseInt(val);
-            break;
+              time = parseInt(val);
+              break;
             case 'defaultDuration' :
-            dftm = parseInt(val);
-            break;
+              dftm = parseInt(val);
+              break;
             case 'overlay' :
-            var sheet = page[i].querySelector('.sheet');
-            sheet.style.backgroundColor = val;
-            break;
+              var sheet = page[i].querySelector('.sheet');
+              sheet.style.backgroundColor = val;
+              break;
             default:
-            time = dftm;
-            page[i].style[key] = val + ' !important';
-            break;
+              time = dftm;
+              page[i].style[key] = val + ' !important';
+              break;
           }
         }
         for (var j = 0; j < 6; j++) {
@@ -205,7 +208,7 @@ var SlideScript = function (opts) {
       SlideFunc.fadein(note, time);
       tout = setTimeout(function () {
         SlideFunc.fadeout(note, time);
-      }, 600);
+      }, 1000);
     } else {
       for (var i = 0; i < li.length; i++) {
         li[i].setAttribute('class', '');
@@ -230,24 +233,41 @@ var SlideScript = function (opts) {
 
   var vs = {
     help : false,
-    list : false
+    list : false,
+    over : false
   };
   window.addEventListener('keydown', function (event) {
     if (opts.debug) console.log(event.keyCode);
     switch (event.keyCode) {
       case 37 : // ←
-        vs.help = false;
-        vs.list = false;
-        self.move(prev - 1);
+        if (!vs.over) {
+          vs.help = false;
+          vs.list = false;
+          self.move(prev - 1);
+        }
         break;
       case 39 : // →
+        if (!vs.over) {
+          vs.help = false;
+          vs.list = false;
+          self.move(prev + 1);
+        }
+        break;
+      case 66 : // B
+        vs.over = !vs.over ? 'individual' : 'release';
         vs.help = false;
         vs.list = false;
-        self.move(prev + 1);
         break;
       case 67 : // C
         vs.help = false;
         vs.list = !vs.list;
+        break;
+      case 82 : // R
+        switch (vs.over) {
+          case 'handout'    : vs.over = 'individual'; break;
+          case 'individual' : vs.over = 'handout'; break;
+          default : break;
+        }
         break;
       case 90 : // Z
         vs.help = !vs.help;
@@ -256,10 +276,50 @@ var SlideScript = function (opts) {
       default :
         vs.help = false;
         vs.list = false;
+        vs.over = false;
         break;
     }
     vs.help ? SlideFunc.fadein(help, time) : SlideFunc.fadeout(help, time);
     vs.list ? SlideFunc.fadein(list, time) : SlideFunc.fadeout(list, time);
+
+    if (false == vs.over) {
+      console.log(false);
+      return false;
+    } else if ('release' == vs.over ) {
+      if (note.getAttribute('x-notify')) {
+        note.setAttribute('x-notify', '');
+        SlideFunc.fadeout(note, time);
+      }
+      links.setAttribute('href', './src/styles.css');
+      var image = document.querySelectorAll('.print');
+      for (var i = 0; i < image.length; i++) {
+        image[i].parentNode.removeChild(image[i]);
+      }
+      for (var i = 0; i < page.length; i++) {
+        page[i].style.display = prev == i ? 'block' : 'none';
+        page[i].style.height = 'auto';
+      }
+      vs.over = false;
+    } else {
+      note.innerHTML = 'Mode: ' + vs.over + '<br>To switch, Press [R].';
+      note.setAttribute('x-notify', 'true');
+      SlideFunc.fadein(note, time);
+      // 個別にフルサイズ
+      links.setAttribute('href', './src/' + vs.over + '.css');
+      for (var i = 0; i < page.length; i++) {
+        page[i].style.display = 'block';
+        if ('initial' != page[i].style.backgroundImage && '' != page[i].style.backgroundImage) {
+          if (null == page[i].querySelector('.print')) {
+            var image = document.createElement('img');
+            image.style.zIndex = 10;
+            image.style.maxWidth = '100%';
+            image.setAttribute('src', page[i].style.backgroundImage.replace(/^url\((.*)\)$/g,'$1'));
+            image.setAttribute('class', 'print');
+            page[i].appendChild(image);
+          }
+        }
+      }
+    }
   }, false);
 
 }

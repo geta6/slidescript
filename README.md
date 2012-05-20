@@ -19,6 +19,20 @@ How to use
 
 that's all.
 
+How to play
+-----------
+
+* ← : Previous
+* → : Next
+* Z : Help
+* C : Index
+* B : Build for Print
+* R : Switch build mode
+
+### Build Mode
+
+* Stylize slide for print.
+
 How to write
 ------------
 
