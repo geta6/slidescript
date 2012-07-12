@@ -1,0 +1,164 @@
+@theme : default
+@defaultTransition : dissolve
+@defaultDuration : 240
+@transition: moveto
+
+# SlideScript
+
+#### jsでmarkdownなスライド作ってみた
+###### by [geta6](//github.com/geta6)
+&nbsp;
+
+* スライドの移動は「←」「→」
+* 「z」キーでHelpを表示
+
+
+
+--------------
+@transition: moveto
+
+
+# アバウトな解説
+
+* markdownな文書からslideを作ります
+* 必要なのはjsとブラウザだけ
+  1. `git clone https://github.com/geta6/slidescript`
+  2. `open -a Safari index.html`
+
+
+
+---
+@transition: dissolve
+@color:maroon
+@overlay:rgba(255,255,255,.72)
+
+
+# ![alt](./img/eloo.jpg)
+
+# ショーケース表示
+
+先頭のHeading要素に画像のみを指定すると、その画像がスライドの背景になります
+
+`.image`というクラスが付くので、テーマをカスタムして文字を見やすくしてください
+
+個別に見にくい画像を調整する場合は，`overlay`プロパティでも編集可能です
+
+
+
+--------------
+@background: magenta
+
+
+
+## 主な特徴
+
+* [1ファイルのmarkdown](content.markdown)をスライドにします
+  * スライドのページ区切りは「---」
+
+* スライド一枚毎にstyleを変更可能です
+  * 「`@property : value`」形式、propertyはcssの属性名です
+  * ハイフンは大文字にします　例)「`z-index`」->「`zIndex`」
+
+* トランジション・テーマの独自拡張があります
+    * `@transition:transitionType`
+    * `@duration:transitionDuration(ms)`
+    * `@theme:themeName`
+
+* 一括設定もできます
+    * `@defaultTranstion : dissolve`
+    * `@defaultDuration : 240`
+
+
+
+---
+
+
+
+# フォルダ
+
+### `./theme`
+* テーマcssを入れます
+  1. 「`./theme/hoge.css`」を作ります
+  2. 先頭スライドで「@theme:hoge」を書きます、そのcssが適応されます
+  3. 途中スライドに「@theme:hoge」を書くと、そのスライドが表示された時点でテーマが変更されます
+  4. スライド表示後にそれ以前のスライドへ戻ってもテーマは戻りません
+### `./transition`
+* トランジション関数を入れます
+  1. 「`./transition/dissolve.js`」を作ります
+  2. 「@transition:dissolve」を書きます，プロパティは定義した関数名で指定します
+  3. 書いたスライドから移動する時に、そのトランジションが適応されます
+
+
+
+---
+@transition: dissolve
+
+
+
+# トランジション
+
+* 「`@transition: dissolve`」でdissolveになります
+
+* `./transition`フォルダに関数が入ってます
+  * 引数1が現在のスライドノード
+  * 引数2が次のスライドノード
+  * 引数3がアニメーションの時間ミリ秒です
+  * 引数4は、進行ならtrue、後退ならfalseが入ります
+
+
+---
+
+
+
+# ビルドモード
+
+* 「B」を押すと印刷用にスライドをカスタムします
+  * 背景画像は印刷されないので，スライドの末尾にimg要素として付加します
+* 現在，下記のモードが利用可能です
+  * 1ページに1枚ずつ印刷する「individual」モード
+  * 1ページの左に4枚ずつ縦に並べて表示する「handout」モード
+* モードの切り替えは「B」でビルドした後，「R」で行います
+
+
+---
+
+
+
+# 要件
+
+* jsが使えるブラウザ
+* CSS3が使えるブラウザ
+* Safari/Firefoxで確認済み
+  * ChromeだとlocalhostにXHRできないので使えない
+  * なんとかしたい
+
+
+
+---
+
+
+
+# 特にプレゼンするものが無くて困っている
+
+草でもｗｗｗ生やすｗｗｗ
+
+> マジか
+>> マジ生えた
+>>> はえたの？
+>>>> 草はえた
+
+
+
+## ダウンロード
+
+[ダウンロードできる](//github.com/geta6/slidescript)
+
+
+
+---
+
+
+
+### トゥードゥー
+
+* jQuery使ったら負け
