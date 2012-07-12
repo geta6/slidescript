@@ -49,7 +49,6 @@ SlideFunc = {
 var SlideScript = function (opts) {
 
 
-
   var self = this,
       /* ELEMENT */theme, links, wrap, page, note, help, list,
       /* COUNTER */prev = 0, tout, li,
@@ -69,10 +68,7 @@ var SlideScript = function (opts) {
       };
 
 
-
   self.fn = {};
-
-
 
 
   // construct
@@ -228,7 +224,6 @@ var SlideScript = function (opts) {
       prev = next;
     }
   }
-
 
 
   var vs = {
